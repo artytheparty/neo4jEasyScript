@@ -1,0 +1,18 @@
+docker run -v $HOME/neo4j/data:/data -v $HOME/neo4j/import:/var/lib/neo4j/import neo4j:latest bin/neo4j-admin database import full \
+--nodes=import/nodes/<path>.csv \
+--relationships=import/edges/<path>.csv \
+neo4j --overwrite-destination\
+&& \
+docker run \
+    --rm\
+    -p7474:7474 -p7687:7687 \
+    -d \
+    -v $HOME/neo4j/data:/data \
+    -v $HOME/neo4j/logs:/logs \
+    -v $HOME/neo4j/import:/var/lib/neo4j/import \
+    -e NEO4J_AUTH=neo4j/password \
+    -e NEO4J_apoc_export_file_enabled=true \
+    -e NEO4J_apoc_import_file_enabled=true \
+    -e NEO4J_apoc_import_file_use__neo4j__config=true \
+    -e NEO4J_PLUGINS=\[\"apoc\",\"apoc-extended\"\] \
+    neo4j:latest
