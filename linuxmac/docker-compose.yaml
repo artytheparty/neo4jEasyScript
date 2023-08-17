@@ -11,7 +11,7 @@ services:
             - ../import:/var/lib/neo4j/import
         command: "bin/neo4j-admin database import full \
             --nodes=import/movies.csv \
-            --nodes=impor/actors.csv \
+            --nodes=import/actors.csv \
             --relationships=import/roles.csv \
             neo4j --overwrite-destination"
     neo4j:
