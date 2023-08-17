@@ -1,0 +1,36 @@
+
+version: '3.3'
+services:
+    preNeo4j:
+        image: neo4j:latest
+        ports:
+            - 7474:7474
+            - 7687:7687
+        volumes:
+            - ../data:/data
+            - ../logs:/logs
+            - ../import:/var/lib/neo4j/import
+        command: "bin/neo4j-admin database import full \
+            --nodes=import/movies.csv \
+            --nodes=import/actors.csv \
+            --relationships=import/roles.csv \
+            neo4j --overwrite-destination"
+    neo4j:
+        depends_on:
+            preNeo4j:
+                condition: service_completed_successfully
+        container_name: neo4jTEST
+        ports:
+            - 7474:7474
+            - 7687:7687
+        volumes:
+            - ../data:/data
+            - ../logs:/logs
+            - ../import:/var/lib/neo4j/import
+        environment:
+            - NEO4J_AUTH=neo4j/password
+            - NEO4J_apoc_export_file_enabled=true
+            - NEO4J_apoc_import_file_enabled=true
+            - NEO4J_apoc_import_file_use__neo4j__config=true
+            - NEO4J_PLUGINS=["apoc","apoc-extended"]
+        image: neo4j:latest

@@ -6,9 +6,9 @@ services:
             - 7474:7474
             - 7687:7687
         volumes:
-            - $HOME/neo4j/data:/data
-            - $HOME/neo4j/logs:/logs
-            - $HOME/neo4j/import:/var/lib/neo4j/import
+            - ../data:/data
+            - ../logs:/logs
+            - ../import:/var/lib/neo4j/import
         command: "bin/neo4j-admin database import full \
             --nodes=import/nodes/<path>.csv \
             --relationships=import/edges/<path>.csv \
@@ -22,9 +22,9 @@ services:
             - 7474:7474
             - 7687:7687
         volumes:
-            - $HOME/neo4j/data:/data
-            - $HOME/neo4j/logs:/logs
-            - $HOME/neo4j/import:/var/lib/neo4j/import
+            - ../data:/data
+            - ../logs:/logs
+            - ../import:/var/lib/neo4j/import
         environment:
             - NEO4J_AUTH=neo4j/password
             - NEO4J_apoc_export_file_enabled=true
