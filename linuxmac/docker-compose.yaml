@@ -10,8 +10,9 @@ services:
             - ../logs:/logs
             - ../import:/var/lib/neo4j/import
         command: "bin/neo4j-admin database import full \
-            --nodes=import/nodes/<path>.csv \
-            --relationships=import/edges/<path>.csv \
+            --nodes=import/movies.csv \
+            --nodes=impor/actors.csv \
+            --relationships=import/roles.csv \
             neo4j --overwrite-destination"
     neo4j:
         depends_on:
